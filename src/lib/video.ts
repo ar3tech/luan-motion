@@ -1,4 +1,5 @@
 import type { Project } from '@/data/projects'
+import { dict, type Lang } from '@/i18n'
 
 export type ResolvedProject = Project & {
   key: string
@@ -18,11 +19,10 @@ export function aspectClass(aspect: Project['aspect']) {
   return ASPECT_CLASS[aspect ?? '16/9']
 }
 
-const PERSONAL = 'Projeto pessoal'
-
-export function clientLabel(project: Project) {
-  if (project.personal && project.client !== PERSONAL) return `${project.client} · ${PERSONAL}`
-  return project.client
+export function clientLabel(project: Project, lang: Lang) {
+  if (!project.personal) return project.client
+  const personal = dict[lang].personal
+  return project.client ? `${project.client} · ${personal}` : personal
 }
 
 function embedUrl(project: Project) {

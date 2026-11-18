@@ -9,18 +9,30 @@ npm install
 npm run dev
 ```
 
-Abre em http://localhost:3100
+Abre em http://localhost:3000 (português) e http://localhost:3000/en (inglês).
 
 ## O que editar
 
-Você só precisa mexer em dois arquivos:
-
 | Arquivo | O que tem dentro |
 |---|---|
-| `src/data/site.ts` | Seu nome, bio, e-mail, redes, lista de serviços |
-| `src/data/projects.ts` | Os trabalhos (vídeos, títulos, clientes, ano) |
+| `src/data/site.ts` | Nome, bio e serviços (em português e inglês), e-mail, redes |
+| `src/data/projects.ts` | Os trabalhos (vídeos, títulos, clientes, ano, funções) |
+| `src/i18n.ts` | Textos da interface nos dois idiomas e a tradução das funções |
 
-Os campos ainda em aberto estão marcados com `TODO` nesses arquivos.
+Campos vazios simplesmente não aparecem no site.
+
+## Idiomas
+
+O português fica em `motion.wilbetech.com.br` e o inglês em
+`motion.wilbetech.com.br/en`. Para clientes de fora, mande sempre o link `/en`.
+
+- O botão **EN / PT** no menu troca de idioma e o site lembra a escolha.
+- Na primeira visita a `/`, quem tem o navegador em outro idioma que não o
+  português vai direto para `/en`. Um link para `/en` sempre abre em inglês.
+- Os títulos dos trabalhos são os nomes originais das peças e aparecem iguais
+  nos dois idiomas. Cliente, funções e o selo "Projeto pessoal" são traduzidos.
+- Ao acrescentar uma função nova num trabalho, inclua a tradução dela em
+  `roles`, dentro de `src/i18n.ts`. Sem tradução, ela aparece como está escrita.
 
 ## Como adicionar um trabalho
 

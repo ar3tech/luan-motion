@@ -5,9 +5,11 @@ import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import clsx from 'clsx'
 import { aspectClass, clientLabel, type ResolvedProject } from '@/lib/video'
+import { dict, translateRole, type Lang } from '@/i18n'
 
 export function ProjectTile({
   project,
+  lang,
   onOpen,
   onHoverChange,
   priority,
@@ -16,6 +18,7 @@ export function ProjectTile({
   drift = 0,
 }: {
   project: ResolvedProject
+  lang: Lang
   onOpen: () => void
   onHoverChange: (hovering: boolean) => void
   priority?: boolean
@@ -45,7 +48,7 @@ export function ProjectTile({
           onMouseLeave={() => onHoverChange(false)}
           onFocus={() => onHoverChange(true)}
           onBlur={() => onHoverChange(false)}
-          aria-label={`Assistir ${project.title}`}
+          aria-label={dict[lang].watch(project.title)}
           className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-4 focus-visible:ring-offset-paper"
         >
           <div className={clsx('relative overflow-hidden bg-paper-dim', aspectClass(project.aspect))}>
@@ -70,8 +73,8 @@ export function ProjectTile({
           <div className="mt-3 flex items-baseline justify-between gap-6">
             <div className="min-w-0">
               <p className="text-label uppercase leading-snug text-ink-faint">
-                {clientLabel(project)}
-                {project.agency && ` · via ${project.agency}`}
+                {clientLabel(project, lang)}
+                {project.agency && ` · ${dict[lang].via} ${project.agency}`}
               </p>
               <h3 className="mt-1 text-base font-semibold leading-snug tracking-tight text-balance sm:text-lg">
                 {project.title}
@@ -81,7 +84,7 @@ export function ProjectTile({
           </div>
   
           {project.roles.length > 0 && (
-            <p className="mt-1 text-label-sm uppercase text-ink-faint">{project.roles.join(' / ')}</p>
+            <p className="mt-1 text-label-sm uppercase text-ink-faint">{project.roles.map((role) => translateRole(role, lang)).join(' / ')}</p>
           )}
         </button>
       </motion.article>

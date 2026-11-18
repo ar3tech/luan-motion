@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { site } from '@/data/site'
+import { dict, type Lang } from '@/i18n'
 
 const SOCIAL_LABELS: Record<keyof typeof site.social, string> = {
   instagram: 'Instagram',
@@ -10,13 +11,14 @@ const SOCIAL_LABELS: Record<keyof typeof site.social, string> = {
   linkedin: 'LinkedIn',
 }
 
-export function Contact() {
+export function Contact({ lang }: { lang: Lang }) {
+  const t = dict[lang]
   const socials = (Object.keys(site.social) as (keyof typeof site.social)[])
     .filter((key) => site.social[key])
     .map((key) => ({ label: SOCIAL_LABELS[key], href: site.social[key] }))
 
   return (
-    <footer id="contato" className="px-5 pb-10 pt-32 sm:px-8 md:pt-48">
+    <footer id={t.sections.contact} className="px-5 pb-10 pt-32 sm:px-8 md:pt-48">
       <div className="mx-auto max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -24,7 +26,7 @@ export function Contact() {
           viewport={{ once: true, margin: '-15%' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="text-label uppercase text-ink-faint">Contato</p>
+          <p className="text-label uppercase text-ink-faint">{t.contact}</p>
 
           {site.email ? (
             <a
@@ -35,7 +37,7 @@ export function Contact() {
             </a>
           ) : (
             <p className="mt-6 text-display-xl tracking-tight text-ink-faint">
-              adicione seu e-mail
+              {t.emailMissing}
             </p>
           )}
         </motion.div>

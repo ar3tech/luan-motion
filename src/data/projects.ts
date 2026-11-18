@@ -23,8 +23,9 @@
 // veio por intermédio de uma agência.
 //
 // `personal: true` marca o trabalho como projeto pessoal (estudo, não
-// encomendado). Se `client` for o nome de uma marca, aparece
-// "Marca · Projeto pessoal".
+// encomendado). Com `client` vazio aparece só "Projeto pessoal"; com o
+// nome de uma marca, "Marca · Projeto pessoal". Em inglês vira
+// "Personal project".
 //
 // No computador os trabalhos se alternam entre as colunas esquerda e
 // direita, na ordem da lista. Use `column: 'left'` ou `column: 'right'`
@@ -87,7 +88,8 @@ export const projects: Project[] = [
   },
   {
     id: '1124329944',
-    client: 'Projeto pessoal',
+    client: '',
+    personal: true,
     title: 'Skate Cycle',
     year: '2026',
     roles: ROLES,

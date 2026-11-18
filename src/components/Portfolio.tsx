@@ -5,23 +5,21 @@ import { About } from '@/components/About'
 import { Contact } from '@/components/Contact'
 import { projects } from '@/data/projects'
 import { resolveProjects } from '@/lib/video'
+import type { Lang } from '@/i18n'
 
-// Thumbnails come from Vimeo/YouTube and refresh hourly, so a new cover set
-// on Vimeo shows up without a redeploy.
-export const revalidate = 3600
-
-export default async function Home() {
+// The whole page, shared by "/" (pt) and "/en" (en).
+export async function Portfolio({ lang }: { lang: Lang }) {
   const resolved = await resolveProjects(projects)
 
   return (
     <>
-      <Nav />
+      <Nav lang={lang} />
       <main id="top">
         <Hero />
-        <WorkGallery projects={resolved} />
-        <About />
+        <WorkGallery projects={resolved} lang={lang} />
+        <About lang={lang} />
       </main>
-      <Contact />
+      <Contact lang={lang} />
     </>
   )
 }

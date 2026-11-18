@@ -13,6 +13,7 @@ import {
 import { ProjectTile } from './ProjectTile'
 import { Lightbox } from './Lightbox'
 import type { ResolvedProject } from '@/lib/video'
+import { dict, type Lang } from '@/i18n'
 
 // A speed that looks random but is fixed per position, so the server and the
 // browser render the same layout. Neighbours never differ by more than 90px,
@@ -75,7 +76,7 @@ function PlayCursor({ active }: { active: boolean }) {
   )
 }
 
-export function WorkGallery({ projects }: { projects: ResolvedProject[] }) {
+export function WorkGallery({ projects, lang }: { projects: ResolvedProject[]; lang: Lang }) {
   const [open, setOpen] = useState<ResolvedProject | null>(null)
   const [hovering, setHovering] = useState(false)
 
@@ -106,13 +107,14 @@ export function WorkGallery({ projects }: { projects: ResolvedProject[] }) {
   const rightY = useTransform(scrollYProgress, [0, 1], [160, -160])
 
   return (
-    <section id="trabalhos" className="px-5 sm:px-8">
+    <section id={dict[lang].sections.work} className="px-5 sm:px-8">
       <PlayCursor active={hovering && !open} />
 
       {featured && (
         <div className="mx-auto mb-20 max-w-[1600px] md:mb-32">
           <ProjectTile
             project={featured}
+            lang={lang}
             priority
             onOpen={() => setOpen(featured)}
             onHoverChange={setHovering}
@@ -132,6 +134,7 @@ export function WorkGallery({ projects }: { projects: ResolvedProject[] }) {
             <ProjectTile
               key={project.key}
               project={project}
+              lang={lang}
               order={order}
               drift={parallax ? driftFor(order) : 0}
               priority={order === 0}
@@ -149,6 +152,7 @@ export function WorkGallery({ projects }: { projects: ResolvedProject[] }) {
             <ProjectTile
               key={project.key}
               project={project}
+              lang={lang}
               order={order}
               drift={parallax ? driftFor(order) : 0}
               onOpen={() => setOpen(project)}
@@ -158,7 +162,7 @@ export function WorkGallery({ projects }: { projects: ResolvedProject[] }) {
         </motion.div>
       </div>
 
-      <Lightbox project={open} onClose={() => setOpen(null)} />
+      <Lightbox project={open} lang={lang} onClose={() => setOpen(null)} />
     </section>
   )
 }

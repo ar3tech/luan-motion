@@ -4,15 +4,13 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import { site } from '@/data/site'
+import { dict, HOME, type Lang } from '@/i18n'
+import { rememberLang } from './LanguageRedirect'
 
-const links = [
-  { label: 'Trabalhos', href: '#trabalhos' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Contato', href: '#contato' },
-]
-
-export function Nav() {
+export function Nav({ lang }: { lang: Lang }) {
   const [scrolled, setScrolled] = useState(false)
+  const t = dict[lang]
+  const other: Lang = lang === 'pt' ? 'en' : 'pt'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -20,6 +18,12 @@ export function Nav() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const links = [
+    { label: t.nav.work, href: `#${t.sections.work}` },
+    { label: t.nav.about, href: `#${t.sections.about}` },
+    { label: t.nav.contact, href: `#${t.sections.contact}` },
+  ]
 
   return (
     <motion.nav
@@ -38,7 +42,7 @@ export function Nav() {
         {site.name}
       </a>
 
-      <div className="flex gap-6 sm:gap-8">
+      <div className="flex items-center gap-4 sm:gap-8">
         {links.map((link) => (
           <a
             key={link.href}
@@ -48,6 +52,18 @@ export function Nav() {
             {link.label}
           </a>
         ))}
+
+        <a
+          href={HOME[other]}
+          hrefLang={dict[other].htmlLang}
+          lang={dict[other].htmlLang}
+          aria-label={t.switchLabel}
+          title={t.switchLabel}
+          onClick={() => rememberLang(other)}
+          className="border-l border-line pl-4 text-label uppercase text-ink-soft transition-colors hover:text-ink sm:pl-8"
+        >
+          {t.switchTo}
+        </a>
       </div>
     </motion.nav>
   )

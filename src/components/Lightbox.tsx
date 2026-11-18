@@ -3,12 +3,15 @@
 import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { clientLabel, type ResolvedProject } from '@/lib/video'
+import { dict, translateRole, type Lang } from '@/i18n'
 
 export function Lightbox({
   project,
+  lang,
   onClose,
 }: {
   project: ResolvedProject | null
+  lang: Lang
   onClose: () => void
 }) {
   useEffect(() => {
@@ -45,10 +48,10 @@ export function Lightbox({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Fechar"
+            aria-label={dict[lang].closeLabel}
             className="absolute right-5 top-5 z-10 text-label uppercase text-paper/70 transition-colors hover:text-paper sm:right-8 sm:top-8"
           >
-            Fechar (esc)
+            {dict[lang].close}
           </button>
 
           <motion.div
@@ -71,14 +74,14 @@ export function Lightbox({
 
             <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 text-paper">
               <h2 className="text-lg font-semibold tracking-tight">
-                <span className="text-paper/50">{clientLabel(project)} — </span>
+                <span className="text-paper/50">{clientLabel(project, lang)} — </span>
                 {project.title}
                 {project.agency && (
-                  <span className="ml-2 text-sm font-normal text-paper/50">via {project.agency}</span>
+                  <span className="ml-2 text-sm font-normal text-paper/50">{dict[lang].via} {project.agency}</span>
                 )}
               </h2>
               <p className="text-label uppercase text-paper/50">
-                {[...project.roles, project.year].join(' · ')}
+                {[...project.roles.map((role) => translateRole(role, lang)), project.year].join(' · ')}
               </p>
             </div>
           </motion.div>
