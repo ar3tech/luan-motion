@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    /* Framer Motion's useScroll measures targets against this element */
+    position: relative;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #f4f2ee;
+    color: #101010;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #101010;
+    color: #f4f2ee;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f4f2ee;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(16, 16, 16, 0.22);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide the native cursor where the custom one takes over */
+  .cursor-none-fine {
+    cursor: none;
+  }
+
+  @media (hover: none) {
+    .cursor-none-fine {
+      cursor: auto;
+    }
+  }
+
+  /* Thin rule used between sections */
+  .hairline {
+    border-top: 1px solid rgba(16, 16, 16, 0.12);
+  }
+}
